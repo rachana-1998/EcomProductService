@@ -1,5 +1,6 @@
 package com.rachana.EcomProductService.service;
 
+import com.rachana.EcomProductService.dto.ProductRequestDTO;
 import com.rachana.EcomProductService.dto.ProductResponseDTO;
 import com.rachana.EcomProductService.dto.ProductResponseListDTO;
 import org.springframework.stereotype.Service;
@@ -24,12 +25,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponseDTO createProduct(ProductResponseDTO product) {
+    public ProductResponseDTO createProduct(ProductRequestDTO product) {
         return null;
     }
 
     @Override
-    public ProductResponseDTO deleteProduct(int id) {
-        return null;
+    public  boolean deleteProduct(int id) {
+return  true;
     }
 }

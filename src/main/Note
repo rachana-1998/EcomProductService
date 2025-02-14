@@ -1,0 +1,18 @@
+11/02/2025 Today i learn
+ 1.getbyId
+ 2.deletebyId
+ 3.getAll
+ 4.Injecting dependency using constructer
+ 5.Controller Advice:-
+ controller advice is something which is used to handle Exception globaly if any thing which thing not handle by catch.
+ @ControllerAdvice
+ class GlobalExceptionHandler{
+ @ExceptionHandler(value=NullPointerException.class)
+ public ResponseEntity<String> NullPointerExceptionHandler(Exception ex){
+ String message="error:"+ex.getMessage()+",code .:"+HTTP.INTERNAl_SERVER_ERROR;
+ return ResponceEntity.OK(message);
+}
+ }
+ for(String name:list){
+
+ }
