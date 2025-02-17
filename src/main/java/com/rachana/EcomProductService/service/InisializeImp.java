@@ -13,11 +13,11 @@ import java.util.List;
 
 @Service
 public class InisializeImp implements Inisialize {
-    private CategoryRepository categoryRepository;
-    private OrdersRepository ordersRepository;
-    private PriceRepository priceRepository;
-    private ProductRepository productRepository;
-    private AutherRepo autherRepo;
+    private final CategoryRepository categoryRepository;
+    private final OrdersRepository ordersRepository;
+    private final PriceRepository priceRepository;
+   private final ProductRepository productRepository;
+    private final AutherRepo autherRepo;
 
     public InisializeImp(CategoryRepository categoryRepository, OrdersRepository ordersRepository, PriceRepository priceRepository, ProductRepository productRepository, AutherRepo autherRepo) {
         this.categoryRepository = categoryRepository;
@@ -53,23 +53,23 @@ public class InisializeImp implements Inisialize {
         watch.setDiscount(15);
          watch =priceRepository.save(watch);
 
-        Product IPhone=new Product();
-        IPhone.setTitle("Iphone");
+       Product IPhone=new Product();
+       IPhone.setTitle("Iphone");
         IPhone.setDescription("best watch");
-        IPhone.setCategory(electronics);
-        IPhone.setPrice(PriceIphone);
-        IPhone=productRepository.save(IPhone);
+       IPhone.setCategory(electronics);
+       IPhone.setPrice(PriceIphone);
+      IPhone=productRepository.save(IPhone);
 
         Product MackBook=new Product();
-        MackBook.setTitle("Mackbook");
-        MackBook.setDescription("best in all OS");
-        MackBook.setImage("http:/localhost/mackbook");
-        MackBook.setCategory(electronics);
-        MackBook.setPrice(PriceMacBook);
-        MackBook = productRepository.save(MackBook);
+       MackBook.setTitle("Mackbook");
+       MackBook.setDescription("best in all OS");
+       MackBook.setImage("http:/localhost/mackbook");
+       MackBook.setCategory(electronics);
+       MackBook.setPrice(PriceMacBook);
+       MackBook = productRepository.save(MackBook);
 
         ProductOrders orders=new ProductOrders();
-        orders.setProducts(List.of(MackBook,IPhone));
+      orders.setProducts(List.of(MackBook,IPhone));
         orders =ordersRepository.save(orders);
 
 

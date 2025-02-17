@@ -1,8 +1,7 @@
 package com.rachana.EcomProductService.client;
 
-import com.rachana.EcomProductService.dto.FakeProductResponseDTO;
-import com.rachana.EcomProductService.dto.FakeProductsRequestDTO;
-import lombok.extern.apachecommons.CommonsLog;
+import com.rachana.EcomProductService.dto.fakeStore.FakeProductResponseDTO;
+import com.rachana.EcomProductService.dto.fakeStore.FakeProductsRequestDTO;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;

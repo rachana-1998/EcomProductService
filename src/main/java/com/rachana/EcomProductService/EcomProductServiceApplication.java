@@ -7,11 +7,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EcomProductServiceApplication implements CommandLineRunner {
+public class EcomProductServiceApplication   {
 
-    @Autowired
-	private Inisialize inisialize;
-
+//    @Autowired
+//	private Inisialize inisialize;
+//
 
 
 	public static void main(String[] args)
@@ -19,8 +19,8 @@ public class EcomProductServiceApplication implements CommandLineRunner {
 		SpringApplication.run(EcomProductServiceApplication.class, args);
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
-		inisialize.initialize();
-	}
+//	@Override
+//	public void run(String... args) throws Exception {
+//		inisialize.initialize();
+//	}
 }

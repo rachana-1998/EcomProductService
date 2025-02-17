@@ -1,8 +1,6 @@
-package com.rachana.EcomProductService.dto;
+package com.rachana.EcomProductService.dto.fakeStore;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.UUID;

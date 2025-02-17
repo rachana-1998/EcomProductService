@@ -1,15 +1,12 @@
-package com.rachana.EcomProductService.dto;
+package com.rachana.EcomProductService.dto.fakeStore;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class ProductRequestDTO {
+@Getter
+
+public class FakeProductsRequestDTO {
 
     private String title;
     private double price;

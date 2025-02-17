@@ -1,12 +1,12 @@
 package com.rachana.EcomProductService.service;
 
-import com.rachana.EcomProductService.dto.ProductRequestDTO;
-import com.rachana.EcomProductService.dto.ProductResponseDTO;
-import com.rachana.EcomProductService.dto.ProductResponseListDTO;
-import com.rachana.EcomProductService.mapper.Mapper;
+import com.rachana.EcomProductService.dto.request.ProductRequestDTO;
+import com.rachana.EcomProductService.dto.response.ProductResponseDTO;
+import com.rachana.EcomProductService.dto.response.ProductResponseListDTO;
+import com.rachana.EcomProductService.mapper.ProductMapper;
 import com.rachana.EcomProductService.module.Product;
 import com.rachana.EcomProductService.productException.InvalidTitleException;
-import com.rachana.EcomProductService.productException.ProductException;
+import com.rachana.EcomProductService.productException.ProductNotFoundException;
 import com.rachana.EcomProductService.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponseListDTO getAllProduct() {
             List< Product> products = productRepository.findAll();
-        return Mapper.productToProductResponseDTO(products);
+        return ProductMapper.productToProductResponseDTO(products);
     }
     @Override
     public ProductResponseDTO getProductById(UUID id) {
@@ -35,21 +35,24 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponseDTO getProductByTitle(String title) throws InvalidTitleException, ProductException {
+    public ProductResponseDTO getProductByTitle(String title) throws InvalidTitleException, ProductNotFoundException {
         if(title==null||title.isEmpty() ) {
         throw new InvalidTitleException("title is empty or null");
         }
         Product product= productRepository.findByTitle(title);
         if (product == null){
-            throw new ProductException("Do not have product with given title");
+            throw new ProductNotFoundException("Do not have product with given title");
         }
 
-        return Mapper.productToResponceDTO(product);
+        return ProductMapper.productToResponceDTO(product);
     }
 
     @Override
-    public ProductResponseDTO updateProduct(int id, ProductResponseDTO product) {
-        return null;
+    public ProductResponseDTO updateProduct(UUID id, ProductRequestDTO product) {
+
+        Product product1=  ProductMapper.RequestDTOToproduct(product);
+          return   ProductMapper.productToResponseDTO(productRepository.updateProduct(id,product1));
+
     }
 
     @Override
@@ -58,7 +61,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public  boolean deleteProduct(int id) {
-return  true;
+    public  boolean deleteProduct(UUID id) {
+        productRepository.deleteById(id);
+     return  true;
     }
 }

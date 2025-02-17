@@ -1,19 +1,20 @@
 package com.rachana.EcomProductService.service;
 
 import com.rachana.EcomProductService.client.FakeStoreProductClient;
-import com.rachana.EcomProductService.dto.*;
-import com.rachana.EcomProductService.productException.ProductException;
+import com.rachana.EcomProductService.dto.fakeStore.FakeProductResponseDTO;
+import com.rachana.EcomProductService.dto.fakeStore.FakeProductsRequestDTO;
+import com.rachana.EcomProductService.dto.request.ProductRequestDTO;
+import com.rachana.EcomProductService.dto.response.ProductResponseDTO;
+import com.rachana.EcomProductService.dto.response.ProductResponseListDTO;
+import com.rachana.EcomProductService.productException.ProductNotFoundException;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import static com.rachana.EcomProductService.mapper.Mapper.fakeProductResponseToProductResponse;
-import static com.rachana.EcomProductService.mapper.Mapper.productRequestTofakeproduct;
+import static com.rachana.EcomProductService.mapper.ProductMapper.fakeProductResponseToProductResponse;
+import static com.rachana.EcomProductService.mapper.ProductMapper.productRequestTofakeproduct;
 import static com.rachana.EcomProductService.util.ProductUtil.isNull;
-import com.rachana.EcomProductService.productException.ProductException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,18 +40,19 @@ public class FakeProductServiceImpl implements ProductService{
     }
 
     @Override
-    public ProductResponseDTO getProductById(UUID id) throws ProductException {
+    public ProductResponseDTO getProductById(UUID id) throws ProductNotFoundException {
         FakeProductResponseDTO fakeProductResponseDTO=fakeStoreProductClient.getProductById(id);
         if(!(isNull(fakeProductResponseDTO))){
         ProductResponseDTO productResponseDTO=fakeProductResponseToProductResponse(fakeProductResponseDTO);
             return  productResponseDTO;
         }
-        throw new ProductException("product not found with id :"+id);
+        throw new ProductNotFoundException("product not found with id :"+id);
 
     }
 
     @Override
-    public ProductResponseDTO updateProduct(int id, ProductResponseDTO product) {
+    public ProductResponseDTO updateProduct(UUID id, ProductRequestDTO product) {
+
         return null;
     }
 
@@ -62,7 +64,7 @@ public class FakeProductServiceImpl implements ProductService{
     }
 
     @Override
-    public boolean deleteProduct(int id) {
+    public boolean deleteProduct(UUID id) {
         String url="https://fakestoreapi.com/products/"+id;
         RestTemplate restTemplate=restTemplateBuilder.build();
         restTemplate.delete(url) ;

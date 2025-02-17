@@ -1,12 +1,12 @@
 package com.rachana.EcomProductService.service;
 
 
-import com.rachana.EcomProductService.dto.ProductResponseDTO;
+import com.rachana.EcomProductService.dto.response.ProductResponseDTO;
 import com.rachana.EcomProductService.module.Category;
 import com.rachana.EcomProductService.module.Price;
 import com.rachana.EcomProductService.module.Product;
 import com.rachana.EcomProductService.productException.InvalidTitleException;
-import com.rachana.EcomProductService.productException.ProductException;
+import com.rachana.EcomProductService.productException.ProductNotFoundException;
 import com.rachana.EcomProductService.repository.ProductRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +34,7 @@ public class ProductServiceImplTest {
     }
 
     @Test
-    public void getProductByTitleTest() throws InvalidTitleException, ProductException {
+    public void getProductByTitleTest() throws InvalidTitleException, ProductNotFoundException {
         /// create or Arrange
 
         Category category=new Category();
@@ -52,7 +52,7 @@ public class ProductServiceImplTest {
         mockProduct.setUuid(UUID.randomUUID());
         mockProduct.setCategory(category);
         mockProduct.setPrice(price);
-        when(productRepository.findByTitle(title)).thenReturn(mockProduct);
+        Product savedProduct = (Product) when(productRepository.findByTitle(title)).thenReturn(mockProduct);
 
         //call or act
         ProductResponseDTO productResponseDTO=productService.getProductByTitle(title);
@@ -68,12 +68,12 @@ public class ProductServiceImplTest {
     }
 
     @Test
-    public void getProductByTitle_ResponseDTOWithNullObject() throws InvalidTitleException, ProductException {
+    public void getProductByTitle_ResponseDTOWithNullObject() throws InvalidTitleException, ProductNotFoundException {
         String title="helloProduct";
         when(productRepository.findByTitle(title)).thenReturn(null);
 
         //call
-        Assertions.assertThrows(ProductException.class,()->productService.getProductByTitle(title));
+        Assertions.assertThrows(ProductNotFoundException.class,()->productService.getProductByTitle(title));
 
     }
     @Test
