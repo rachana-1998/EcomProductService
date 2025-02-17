@@ -15,6 +15,7 @@ import com.rachana.EcomProductService.productException.ProductException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service("fakeproductservice")
 public class FakeProductServiceImpl implements ProductService{
@@ -38,7 +39,7 @@ public class FakeProductServiceImpl implements ProductService{
     }
 
     @Override
-    public ProductResponseDTO getProductById(int id) throws ProductException {
+    public ProductResponseDTO getProductById(UUID id) throws ProductException {
         FakeProductResponseDTO fakeProductResponseDTO=fakeStoreProductClient.getProductById(id);
         if(!(isNull(fakeProductResponseDTO))){
         ProductResponseDTO productResponseDTO=fakeProductResponseToProductResponse(fakeProductResponseDTO);
@@ -66,5 +67,10 @@ public class FakeProductServiceImpl implements ProductService{
         RestTemplate restTemplate=restTemplateBuilder.build();
         restTemplate.delete(url) ;
          return true;
+    }
+
+    @Override
+    public ProductResponseDTO getProductByTitle(String title) {
+        return null;
     }
 }

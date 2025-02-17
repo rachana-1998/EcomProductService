@@ -1,4 +1,4 @@
-package com.rachana.EcomProductService.builderDesignPattern;
+package builderDesignPattern;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,9 +12,9 @@ public class StudentBuilder {
     private int age;
     private int fee;
 
-    // Method to build a Student object
-    public Student build() {
-        return new Student(this);
-    }
+//    // Method to build a Student object
+//    public Student build() {
+//        return new Student(this);
+//    }
 }
 

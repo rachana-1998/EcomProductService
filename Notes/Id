@@ -1,0 +1,18 @@
+
+
+for id we should add
+
+@id
+@GeneratedValue(value="uuidGenerator")
+@GenericGenerator(name="uuidGenerator",strategy="uuid4")
+@column(name="id",columnDefinition="binary(16),nullable=false,updatable=false)
+
+
+application.property file
+
+spring.jpa.hibernate.ddl+auto=create,update,verify
+
+
+crete =is basicaly some when you start application it will delete every thing and start using the
+update===is used when update the odified cladd in our child class
+verify= it does not create or update any this it just verify DB has all table/entity .

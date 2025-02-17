@@ -1,9 +1,9 @@
 package com.rachana.EcomProductService.mapper;
 
-import com.rachana.EcomProductService.dto.FakeProductResponseDTO;
-import com.rachana.EcomProductService.dto.FakeProductsRequestDTO;
-import com.rachana.EcomProductService.dto.ProductRequestDTO;
-import com.rachana.EcomProductService.dto.ProductResponseDTO;
+import com.rachana.EcomProductService.dto.*;
+import com.rachana.EcomProductService.module.Product;
+
+import java.util.List;
 
 public class Mapper {
 
@@ -27,6 +27,31 @@ public class Mapper {
         productResponseDTO.setCategory(fakeProductResponseDTO.getCategory());
         productResponseDTO.setDescription(fakeProductResponseDTO.getDescription());
         return productResponseDTO;
+    }
+    public  static ProductResponseListDTO productToProductResponseDTO(List<Product> products){
+        ProductResponseListDTO productResponseListDTO=new ProductResponseListDTO();
+        for(Product p:products){
+            ProductResponseDTO   responseDTO=new ProductResponseDTO();
+            responseDTO.setId(p.getUuid());
+            responseDTO.setDescription(p.getDescription());
+            responseDTO.setCategory(p.getCategory().getCategoryName());
+            responseDTO.setImage(p.getImage());
+            responseDTO.setPrice(p.getPrice().getAmt());
+            responseDTO.setTitle(p.getTitle());
+            productResponseListDTO.getProducts().add(responseDTO);
+
+        }
+        return  productResponseListDTO;
+    }
+    public  static  ProductResponseDTO productToResponceDTO(Product product){
+        ProductResponseDTO productResponseDTO=new ProductResponseDTO();
+        productResponseDTO.setTitle(product.getTitle());
+        productResponseDTO.setDescription(product.getDescription());
+        productResponseDTO.setCategory(product.getCategory().getCategoryName());
+        productResponseDTO.setImage(product.getImage());
+        productResponseDTO.setPrice(product.getPrice().getAmt());
+        productResponseDTO.setId(product.getUuid());
+        return  productResponseDTO;
     }
 
 }

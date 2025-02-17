@@ -1,4 +1,4 @@
-package com.rachana.EcomProductService.builderDesignPattern;
+package builderDesignPattern;
 
 import lombok.Getter;
 
