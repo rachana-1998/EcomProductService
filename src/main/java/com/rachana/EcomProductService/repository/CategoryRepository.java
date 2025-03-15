@@ -13,4 +13,6 @@ public interface CategoryRepository extends JpaRepository<Category, UUID> {
 
     @Query(value = CustomQueries.FIND_PRODUCT_BY_TITLE)
     Category findProductByTitle(String title);
+
+   // void findByName(String name);
 }

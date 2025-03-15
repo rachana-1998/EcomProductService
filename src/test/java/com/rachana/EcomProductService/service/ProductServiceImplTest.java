@@ -52,6 +52,7 @@ public class ProductServiceImplTest {
         mockProduct.setUuid(UUID.randomUUID());
         mockProduct.setCategory(category);
         mockProduct.setPrice(price);
+
         Product savedProduct = (Product) when(productRepository.findByTitle(title)).thenReturn(mockProduct);
 
         //call or act

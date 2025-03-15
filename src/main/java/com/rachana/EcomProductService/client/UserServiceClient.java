@@ -1,7 +1,9 @@
 package com.rachana.EcomProductService.client;
 
+import com.rachana.EcomProductService.dto.ValiadateDTO;
 import com.rachana.EcomProductService.dto.fakeStore.FakeProductResponseDTO;
 import com.rachana.EcomProductService.dto.fakeStore.FakeProductsRequestDTO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -12,11 +14,26 @@ import java.util.UUID;
 
 
 @Component
-public class FakeStoreProductClient {
+public class UserServiceClient {
     private final RestTemplateBuilder restTemplateBuilder;
 
-    public FakeStoreProductClient(RestTemplateBuilder restTemplateBuilder) {
+
+    @Value("${userservice.api.path.validate}")
+    private String userservicevalidatepath;
+
+    private String userserviceAPIURL;
+
+    public UserServiceClient(RestTemplateBuilder restTemplateBuilder,  @Value("${userservice.api.url}") String userserviceAPIURL) {
         this.restTemplateBuilder = restTemplateBuilder;
+
+        this.userserviceAPIURL = userserviceAPIURL;
+    }
+
+    public String validateToken(ValiadateDTO validateToken){
+        String url=userserviceAPIURL+userservicevalidatepath;
+        RestTemplate restTemplate=restTemplateBuilder.build();
+         ResponseEntity<String> productResponse=restTemplate.postForEntity(url, validateToken,String.class);
+         return productResponse.getBody();
     }
 
     public FakeProductResponseDTO createProduct(FakeProductsRequestDTO fakeProductsRequestDTO){
@@ -30,7 +47,7 @@ public class FakeStoreProductClient {
     public FakeProductResponseDTO getProductById(UUID Id){
         String url="https://fakestoreapi.com/products/"+Id;
         RestTemplate restTemplate=restTemplateBuilder.build();
-       ResponseEntity<FakeProductResponseDTO> fakeProductResponseDTOResponseEntity = restTemplate.getForEntity(url,FakeProductResponseDTO.class);
+        ResponseEntity<FakeProductResponseDTO> fakeProductResponseDTOResponseEntity = restTemplate.getForEntity(url,FakeProductResponseDTO.class);
         return fakeProductResponseDTOResponseEntity.getBody();
     }
 

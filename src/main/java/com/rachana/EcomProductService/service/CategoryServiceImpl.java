@@ -34,11 +34,11 @@ public class CategoryServiceImpl implements CategoryService {
           return  CategoryMapper.categoryToCategoryResponseDTO( null);
     }
 
-    @Override
-    public CategoryResponseDTO getCategoryByName(String name) {
-        categoryRepository.findByName(name);
-        return null;
-    }
+//    @Override
+//    public CategoryResponseDTO getCategoryByName(String name) {
+//        categoryRepository.findByName(name);
+//        return null;
+//    }
 
     @Override
     public CategoryResponseListDTO getAllCategory() {

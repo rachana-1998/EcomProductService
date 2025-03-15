@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rachana.EcomProductService.dto.request.ProductRequestDTO;
 import com.rachana.EcomProductService.dto.response.ProductResponseDTO;
 import com.rachana.EcomProductService.dto.response.ProductResponseListDTO;
+import com.rachana.EcomProductService.module.Category;
+import com.rachana.EcomProductService.module.Price;
 import com.rachana.EcomProductService.productException.ProductNotFoundException;
 import com.rachana.EcomProductService.service.ProductService;
 import org.junit.jupiter.api.Test;
@@ -39,6 +41,8 @@ public class ProductControllerTest {
  @MockitoBean
     private ProductNotFoundException productException;
 
+
+
  @Test
     public void getAllProductReturnWhenNoProductAvalable() throws Exception {
 
@@ -55,22 +59,26 @@ public class ProductControllerTest {
 
  @Test
     public void getAllProduct() throws Exception {
+     Category category=new Category();
+     category.setCategoryName("electronics");
+     Price price =new Price();
+     price.setAmt(108080);
      ProductResponseListDTO productResponseListDTO=new ProductResponseListDTO();
      ProductResponseDTO prduct1=new ProductResponseDTO();
      prduct1.setId(UUID.fromString("1ef8aab7-b33a-45c2-8320-3872aa099743"));
      prduct1.setImage("http:/iphone");
      prduct1.setTitle("Iphone");
      prduct1.setDescription("best phone");
-     prduct1.setCategory("Electronics");
-     prduct1.setPrice(108080);
+     prduct1.setCategory(category);
+     prduct1.setPrice(price);
 
      ProductResponseDTO product2=new ProductResponseDTO();
      product2.setId(UUID.fromString("91ef2164-f534-4f82-b504-a58079db39a7"));
      product2.setImage("http:/iphone");
      product2.setTitle("Mackbook");
      product2.setDescription("best phone");
-     product2.setCategory("Electronics");
-     product2.setPrice(108080);
+     product2.setCategory(category);
+     product2.setPrice(price);
 
      productResponseListDTO.setProducts(List.of(prduct1,product2));
 
@@ -83,17 +91,23 @@ public class ProductControllerTest {
 
  @Test
  public void createProduct() throws Exception {
+     Category category=new Category();
+     category.setCategoryName("electronics");
+
+     Price price =new Price();
+     price.setAmt(108080);
+
      ProductRequestDTO productRequestDTO = new ProductRequestDTO();
-     productRequestDTO.setPrice(1008080);
-     productRequestDTO.setCategory("electronics");
+     productRequestDTO.setPrice(price);
+     productRequestDTO.setCategory(category);
      productRequestDTO.setTitle("smartWatch");
      productRequestDTO.setDescription("bestappleproduct");
      productRequestDTO.setImage("/smartwatch");
 
 
      ProductResponseDTO productResponseDTO = new ProductResponseDTO();
-     productResponseDTO.setPrice(1008080);
-     productResponseDTO.setCategory("electronics");
+     productResponseDTO.setPrice(price);
+     productResponseDTO.setCategory(category);
      productResponseDTO.setTitle("smartWatch");
      productResponseDTO.setDescription("bestappleproduct");
      productResponseDTO.setImage("/smartwatch");
@@ -135,13 +149,21 @@ public class ProductControllerTest {
  }
  @Test
     public  void  findProByTitle() throws Exception {
+
+     Category category=new Category();
+     category.setCategoryName("electronics");
+
+     Price price =new Price();
+     price.setAmt(108080);
+
      ProductResponseDTO prduct1=new ProductResponseDTO();
+
      prduct1.setId(UUID.fromString("1ef8aab7-b33a-45c2-8320-3872aa099743"));
      prduct1.setImage("http:/iphone");
      prduct1.setTitle("Iphone");
      prduct1.setDescription("best phone");
-     prduct1.setCategory("Electronics");
-     prduct1.setPrice(108080);
+     prduct1.setCategory(category);
+     prduct1.setPrice(price);
      Mockito.when(productService.getProductByTitle("Iphone")).thenReturn(prduct1);
      mockMvc.perform(get("/products/title/Iphone"))
              .andExpect(status().is(200))

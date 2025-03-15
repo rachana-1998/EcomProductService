@@ -12,7 +12,7 @@ public interface CategoryService {
 
     CategoryResponseDTO getCategoryById(UUID id);
 
-    CategoryResponseDTO getCategoryByName(String name);
+  //  CategoryResponseDTO getCategoryByName(String name);
 
     CategoryResponseListDTO getAllCategory();
 
