@@ -34,14 +34,10 @@ public class ProductControllerTest {
  @Autowired
     private MockMvc mockMvc;
 
-
-
  @MockitoBean("productservice")
     private ProductService productService;
  @MockitoBean
     private ProductNotFoundException productException;
-
-
 
  @Test
     public void getAllProductReturnWhenNoProductAvalable() throws Exception {
@@ -49,7 +45,6 @@ public class ProductControllerTest {
        ProductResponseListDTO emptyResopnseList=new ProductResponseListDTO();
 
        Mockito.when(productService.getAllProduct()).thenReturn(emptyResopnseList);
-
        mockMvc.perform(get("/products"))
              .andExpect(status().is(200))
              .andExpect(content().string("{\"products\":[]}"));

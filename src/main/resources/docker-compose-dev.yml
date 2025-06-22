@@ -1,0 +1,55 @@
+version: '3.8'
+services:
+  acma_iam_config_service:
+    container_name: acma_workforce_db
+    image: mysql:latest
+    restart: on-failure
+    ports:
+      - "3308:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=acma-workforce
+    networks:
+      - acma-iam-network
+
+  acma_iam_fed_service:
+    container_name: acma_customer_ldap
+    image: openidentityplatform/opendj
+    restart: on-failure
+    ports:
+      - "1389:1389"
+      - "1636:1636"
+      - "4444:4444"
+    environment:
+      - BASE_DN=dc=acma,dc=com
+      - ROOT_USER_DN=uid=acmaAdmin
+      - ROOT_PASSWORD=admin@123
+    networks:
+      - acma-iam-network
+
+  acma-iam-service:
+    container_name: acma_iam
+    image: quay.io/keycloak/keycloak:latest
+    command: start-dev
+    restart: always
+    ports:
+      - "8081:8080"
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin@123
+      - KC_DB=mysql
+      - KC_DB_URL=jdbc:mysql://acma_iam_config_service/acma-workforce
+      - KC_DB_USERNAME=root
+      - KC_DB_PASSWORD=admin
+      - KC_HEALTH_ENABLED=true
+      - KC_METRICS_ENABLED=true
+    networks:
+      - acma-iam-network
+    depends_on:
+      - acma_iam_config_service
+      - acma_iam_fed_service
+    volumes:
+     - C:/RachanaPractice/acma_workforce_db:/var/lib/mysql
+networks:
+  acma-iam-network:
+    driver: bridge

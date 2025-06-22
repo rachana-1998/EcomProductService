@@ -13,7 +13,7 @@ public interface ProductService {
     ProductResponseDTO getProductById(UUID id) throws ProductNotFoundException;
     ProductResponseDTO updateProduct(UUID id,ProductRequestDTO product);
     ProductResponseDTO createProduct(ProductRequestDTO product);
-   boolean deleteProduct(UUID id);
+   boolean deleteProduct(UUID id) throws ProductNotFoundException;
    ProductResponseDTO getProductByTitle(String title) throws InvalidTitleException, ProductNotFoundException;
 
 }

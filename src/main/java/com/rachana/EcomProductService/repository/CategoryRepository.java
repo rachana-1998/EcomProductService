@@ -12,7 +12,7 @@ import java.util.UUID;
 public interface CategoryRepository extends JpaRepository<Category, UUID> {
 
     @Query(value = CustomQueries.FIND_PRODUCT_BY_TITLE)
-    Category findProductByTitle(String title);
+    Category findCategoryByName(String title);
 
    // void findByName(String name);
 }

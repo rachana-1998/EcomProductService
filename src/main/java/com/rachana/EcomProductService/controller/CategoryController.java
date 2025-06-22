@@ -1,5 +1,6 @@
 package com.rachana.EcomProductService.controller;
 
+import com.rachana.EcomProductService.CategoryException.CategoryNotFoundException;
 import com.rachana.EcomProductService.dto.request.CategoryRequestDTO;
 import com.rachana.EcomProductService.dto.response.CategoryResponseDTO;
 import com.rachana.EcomProductService.dto.response.CategoryResponseListDTO;
@@ -27,7 +28,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryResponseDTO> getCategoryById(@PathVariable("id") UUID id){
+    public ResponseEntity<CategoryResponseDTO> getCategoryById(@PathVariable("id") UUID id) throws CategoryNotFoundException {
 
         return ResponseEntity.ok(categoryService.getCategoryById(id));
     }
@@ -37,13 +38,13 @@ public class CategoryController {
         return ResponseEntity.ok(categoryList);
     }
     @PutMapping("/{id")
-    public ResponseEntity<CategoryResponseDTO> updateCategory(@PathVariable("id") UUID id,CategoryRequestDTO category){
+    public ResponseEntity<CategoryResponseDTO> updateCategory(@PathVariable("id") UUID id,CategoryRequestDTO category) throws CategoryNotFoundException {
 
       return ResponseEntity.ok(categoryService.updateCategoryById(id,category));
     }
     @DeleteMapping("/{id}")
 
-    public ResponseEntity<Boolean> deleteCategoryById(@PathVariable("id") UUID id){
+    public ResponseEntity<Boolean> deleteCategoryById(@PathVariable("id") UUID id) throws CategoryNotFoundException {
        boolean isDeleted= categoryService.deleteCategoryById(id);
         return ResponseEntity.ok(isDeleted);
     }

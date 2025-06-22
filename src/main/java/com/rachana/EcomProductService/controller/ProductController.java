@@ -69,9 +69,9 @@ public class ProductController {
 
 
     @DeleteMapping("/products/{id}")
-    public ResponseEntity  deleteProduct(@PathVariable("id")  UUID  id,@RequestHeader("token") String token){
-          boolean idDeleted = productService.deleteProduct( id);
-         return  ResponseEntity.ok( idDeleted);
+    public ResponseEntity<Boolean>  deleteProduct(@PathVariable("id")  UUID  id,@RequestHeader("token") String token) throws ProductNotFoundException {
+          boolean isDeleted = productService.deleteProduct( id);
+         return  ResponseEntity.ok( isDeleted);
     }
     private void validateUser(String token) throws Exception {
         String [] chunks=token.split("\\.");

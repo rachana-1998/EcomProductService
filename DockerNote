@@ -1,0 +1,6 @@
+Docker compose
+   to create and run multiple container in one go we use docker compose.
+
+   to up the compose file
+   docker-compose -f docker-compose-dev.yml up -d
+

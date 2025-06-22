@@ -14,6 +14,7 @@ public class CategoryMapper {
     public static Category categorRequestToCategory(CategoryRequestDTO categoryDTO){
         Category category=new Category();
         category.setCategoryName(categoryDTO.getName());
+        category.setUuid(categoryDTO.getId());
         return category;
     }
 

@@ -1,5 +1,6 @@
 package com.rachana.EcomProductService.service;
 
+import com.rachana.EcomProductService.CategoryException.CategoryNotFoundException;
 import com.rachana.EcomProductService.dto.request.CategoryRequestDTO;
 import com.rachana.EcomProductService.dto.response.CategoryResponseDTO;
 import com.rachana.EcomProductService.dto.response.CategoryResponseListDTO;
@@ -17,6 +18,7 @@ public class CategoryServiceImpl implements CategoryService {
 
      private final CategoryRepository categoryRepository;
 
+
     public CategoryServiceImpl(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
@@ -28,30 +30,52 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponseDTO getCategoryById(UUID id) {
+    public CategoryResponseDTO getCategoryById(UUID id) throws CategoryNotFoundException {
          Optional<Category> category = categoryRepository.findById(id);
-          System.out.println(category);
-          return  CategoryMapper.categoryToCategoryResponseDTO( null);
+         if(category.isEmpty()){
+             throw new CategoryNotFoundException("Category does not exist for give id");
+         }
+         Category category1=category.get();
+
+          return  CategoryMapper.categoryToCategoryResponseDTO( category1);
     }
 
-//    @Override
-//    public CategoryResponseDTO getCategoryByName(String name) {
-//        categoryRepository.findByName(name);
-//        return null;
-//    }
+    @Override
+    public CategoryResponseDTO getCategoryByName(String name) throws CategoryNotFoundException {
+        Category category=categoryRepository.findCategoryByName(name);
+        if(category==null){
+            throw new CategoryNotFoundException("category not found");
+        }
+        return CategoryMapper.categoryToCategoryResponseDTO(category);
+    }
 
     @Override
     public CategoryResponseListDTO getAllCategory() {
-        return null;
+        List<Category> categoryList=categoryRepository.findAll();
+        CategoryResponseListDTO categoryResponseDTOList= CategoryMapper.categoryListToResponseList(categoryList);
+        return categoryResponseDTOList;
     }
 
     @Override
-    public CategoryResponseDTO updateCategoryById(UUID id, CategoryRequestDTO category) {
-        return null;
+    public CategoryResponseDTO updateCategoryById(UUID id, CategoryRequestDTO category) throws CategoryNotFoundException {
+        Optional<Category> category1=categoryRepository.findById(id);
+        if(category1.isEmpty()){
+            throw new CategoryNotFoundException("category is not exist on given id");
+        }
+        Category saveCategory=category1.get();
+        saveCategory.setCategoryName(category.getName());
+
+        return CategoryMapper.categoryToCategoryResponseDTO(saveCategory);
     }
 
     @Override
-    public boolean deleteCategoryById(UUID id) {
-        return false;
+    public boolean deleteCategoryById(UUID id) throws CategoryNotFoundException {
+        Optional<Category> category=categoryRepository.findById(id);
+        if (category.isEmpty())
+        {
+            throw new CategoryNotFoundException("category is not exist on given id");
+        }
+        categoryRepository.deleteById(id);
+        return true;
     }
 }

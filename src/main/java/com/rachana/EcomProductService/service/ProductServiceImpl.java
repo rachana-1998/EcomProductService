@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.deser.Deserializers;
 import com.rachana.EcomProductService.dto.request.ProductRequestDTO;
 import com.rachana.EcomProductService.dto.response.ProductResponseDTO;
 import com.rachana.EcomProductService.dto.response.ProductResponseListDTO;
+import com.rachana.EcomProductService.mapper.CategoryMapper;
 import com.rachana.EcomProductService.mapper.ProductMapper;
 import com.rachana.EcomProductService.module.Product;
 import com.rachana.EcomProductService.productException.InvalidTitleException;
@@ -11,6 +12,7 @@ import com.rachana.EcomProductService.productException.ProductNotFoundException;
 import com.rachana.EcomProductService.repository.ProductRepository;
 import org.apache.catalina.mapper.Mapper;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
@@ -77,11 +79,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponseDTO createProduct(ProductRequestDTO product) {
-        return null;
+      Product savedProduct =productRepository.save(  ProductMapper.RequestDTOToproduct(product));
+      return ProductMapper.productToResponceDTO(savedProduct);
     }
 
     @Override
-    public  boolean deleteProduct(UUID id) {
+    public  boolean deleteProduct(UUID id) throws ProductNotFoundException {
+        Optional<Product> product=productRepository.findById(id);
+        if(product.isEmpty()){
+            throw new ProductNotFoundException("product not found with geven id");
+        }
         productRepository.deleteById(id);
      return  true;
     }

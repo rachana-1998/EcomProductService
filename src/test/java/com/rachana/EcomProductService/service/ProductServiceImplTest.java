@@ -43,7 +43,6 @@ public class ProductServiceImplTest {
         Price price=new Price();
         price.setAmt(100);
 
-
         String title="testProductTitle";
         Product mockProduct=new Product();
         mockProduct.setTitle(title);
